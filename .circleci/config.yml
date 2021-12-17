@@ -9,7 +9,7 @@ jobs:
     steps:
       - setup_remote_docker: 
           version: 19.03.13 
-      - run: docker build -t reactdevimage -f ../client/Dockerfile.dev ../client
+      - run: docker build -t reactdevimage -f Dockerfile.dev .
       - run: docker run -it reactdevimage npm run test -- --coverage
       #- run: docker build -t multi-client ../client
 workflows:
