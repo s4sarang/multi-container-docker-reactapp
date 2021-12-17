@@ -2,7 +2,7 @@ version: 2.1
 machine:
   services: docker
 jobs:
-  working_directory: /client
+  working_directory: /app
   build:
     docker:
       - image: cimg/base:stable
