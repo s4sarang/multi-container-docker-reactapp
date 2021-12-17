@@ -14,10 +14,10 @@ jobs:
       - run: docker run -it reactdevimage npm run test -- --coverage
       - run: docker build -t multi-client ./client; docker build -t multi-nginx ./nginx; docker build -t multi-server ./server; docker build -t multi-worker ./worker
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - run: docker push s4sarang/multi-client
-      - run: docker push s4sarang/multi-nginx
-      - run: docker push s4sarang/multi-server
-      - run: docker push s4sarang/multi-worker
+      - run: docker push multi-client
+      - run: docker push multi-nginx
+      - run: docker push multi-server
+      - run: docker push multi-worker
       
 workflows:
   running-tests:
