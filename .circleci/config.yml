@@ -2,18 +2,36 @@ version: 2.1
 machine:
   services: docker
 jobs:
-  working_directory: /~repo
   build:
+    working_directory: ~/repo
     docker:
       - image: cimg/base:stable
     steps:
+      - checkout
       - setup_remote_docker: 
-          version: 19.03.13 
-      - run: ls; pwd; ls ../;
-      #- run: docker build -t reactdevimage -f Dockerfile.dev .
-      #- run: docker run -it reactdevimage npm run test -- --coverage
-      #- run: docker build -t multi-client ../client
+          version: 19.03.13
+      - run: docker build -t reactdevimage -f ./client/Dockerfile.dev ./client/
+      - run: docker run -it reactdevimage npm run test -- --coverage
+  build-images:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run: docker build -t multi-client ./client
+      - run: docker build -t multi-nginx ./nginx
+      - run: docker build -t multi-server ./server
+      - run: docker build -t multi-worker ./worker
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - run: docker push s4sarang/multi-client
+      - run: docker push s4sarang/multi-nginx
+      - run: docker push s4sarang/multi-server
+      - run: docker push s4sarang/multi-worker
+      
 workflows:
   running-tests:
     jobs:
       - build
+      - build-images
