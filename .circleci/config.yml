@@ -23,4 +23,3 @@ workflows:
   running-tests:
     jobs:
       - build
-      - build-images
