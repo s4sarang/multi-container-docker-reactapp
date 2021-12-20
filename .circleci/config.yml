@@ -34,8 +34,8 @@ workflows:
     jobs:
       - build
       - aws-elastic-beanstalk/deploy:
-            environment-name: Multidocker-env
-            application-name: multi-docker
+            environment-name: Multidockerapp-env
+            application-name: multi-docker-app
             filters:
               branches:
                 only: main 
